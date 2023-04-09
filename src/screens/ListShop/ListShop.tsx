@@ -1,9 +1,15 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { View, Text, ScrollView, TextInput, TouchableOpacity , Alert } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+import { View, Text, ScrollView, TextInput, TouchableOpacity, Alert } from "react-native";
+import { AntDesign } from '@expo/vector-icons';
 import ItemShop from './ItemShop';
+import { useAppDispatch } from '../../redux/store';
+import { addCart } from '../../redux/card/slice';
 import _ from "lodash";
 
 function ListShop() {
+	const { push } = useNavigation();
+	const dispatch = useAppDispatch();
 	const [data, setData] = useState([]);
 	const [isloading, setIsloading] = useState(false);
 	const [search, setSearch] = useState("");
@@ -48,7 +54,14 @@ function ListShop() {
 
 	return (
 		<View className='px-3 flex-1'>
-			<Text className='font-bold my-3 text-center text-3xl'>Danh sách sản phẩm</Text>
+			<View className='flex flex-row items-center justify-between'>
+				<Text className='font-bold my-3 text-center text-2xl'>Danh sách sản phẩm</Text>
+				<TouchableOpacity
+					onPress={() => push("MyShoppingCart")}
+				>
+					<AntDesign name="shoppingcart" size={24} color="black" />
+				</TouchableOpacity>
+			</View>
 			<TextInput
 				onChangeText={(value) => {
 					setSearch(value);
@@ -64,8 +77,15 @@ function ListShop() {
 						<TouchableOpacity
 							key={item.id}
 							className='w-1/2'
-							onPress={() => Alert.alert("Thêm sản phẩm",
-							`Bạn đã thêm ${item.title} vào giỏ hàng`)}
+							onPress={() => {
+								Alert.alert("Thêm sản phẩm", `Bạn đã thêm ${item.title} vào giỏ hàng`)
+								dispatch(addCart({
+									id : item.id,
+									uri: item.image,
+									price: item.price,
+									title: item.title
+								}))
+							}}
 						>
 							<ItemShop
 								uri={item.image}
@@ -75,8 +95,8 @@ function ListShop() {
 						</TouchableOpacity>
 					)}
 				</View>
-			</ScrollView>
-		</View>
+			</ScrollView >
+		</View >
 	);
 }
 
