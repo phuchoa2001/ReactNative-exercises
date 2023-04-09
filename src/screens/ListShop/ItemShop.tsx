@@ -3,7 +3,7 @@ import React from 'react'
 
 type ItemShopProps = {
 	uri: string,
-	price: string,
+	price: number,
 	title: string
 }
 
