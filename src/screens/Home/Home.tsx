@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import { AntDesign , Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
 

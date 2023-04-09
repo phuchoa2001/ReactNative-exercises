@@ -32,8 +32,8 @@ export const cardSlice = createSlice({
         const newList = [...state.List];
 
         newList[indexItemToCard] = {
-          ...newList[indexItemToCard] , 
-          quantity : newList[indexItemToCard].quantity + 1
+          ...newList[indexItemToCard],
+          quantity: newList[indexItemToCard].quantity + 1
         }
 
         state.List = [...newList];
@@ -53,4 +53,4 @@ export const cardSlice = createSlice({
 
 export default cardSlice.reducer
 
-export const { addCart , deleteCart } = cardSlice.actions
+export const { addCart, deleteCart } = cardSlice.actions
