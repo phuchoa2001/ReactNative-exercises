@@ -1,0 +1,2 @@
+export const CART_ASNYC_STORAGE = "CART_ASNYC_STORAGE";
+export const AUTH_FIREBASE = "AUTH_FIREBASE";
