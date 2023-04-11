@@ -5,10 +5,13 @@ import { AntDesign } from '@expo/vector-icons';
 import ItemShop from './ItemShop';
 import { useAppDispatch } from '../../redux/store';
 import { addCart } from '../../redux/card/slice';
+import { VStack, Badge } from 'native-base';
+import { useAppSelector } from '../../redux/store';
 import _ from "lodash";
 
 function ListShop() {
 	const { push } = useNavigation();
+	const { List } = useAppSelector(state => state.Cart);
 	const dispatch = useAppDispatch();
 	const [data, setData] = useState([]);
 	const [isloading, setIsloading] = useState(false);
@@ -56,11 +59,26 @@ function ListShop() {
 		<View className='px-3 flex-1'>
 			<View className='flex flex-row items-center justify-between'>
 				<Text className='font-bold my-3 text-center text-2xl'>Danh sách sản phẩm</Text>
-				<TouchableOpacity
-					onPress={() => push("MyShoppingCart")}
-				>
-					<AntDesign name="shoppingcart" size={24} color="black" />
-				</TouchableOpacity>
+				<VStack>
+					<Badge // bg="red.400"
+						colorScheme="danger" 
+						rounded="full" 
+						mb={-4} 
+						mr={-4} 
+						zIndex={1} 
+						variant="solid" 
+						alignSelf="flex-end" 
+						_text={{
+							fontSize: 8
+						}}>
+						{List.length}
+					</Badge>
+					<TouchableOpacity
+						onPress={() => push("MyShoppingCart")}
+					>
+						<AntDesign name="shoppingcart" size={24} color="black" />
+					</TouchableOpacity>
+				</VStack>
 			</View>
 			<TextInput
 				onChangeText={(value) => {
@@ -77,10 +95,10 @@ function ListShop() {
 						<TouchableOpacity
 							key={item.id}
 							className='w-1/2'
-							onPress={() => {
+							onPress={async () => {
 								Alert.alert("Thêm sản phẩm", `Bạn đã thêm ${item.title} vào giỏ hàng`)
 								dispatch(addCart({
-									id : item.id,
+									id: item.id,
 									uri: item.image,
 									price: item.price,
 									title: item.title

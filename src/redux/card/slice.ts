@@ -1,4 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { CART_ASNYC_STORAGE } from '../../constants/AsyncStorage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type cart = {
   id: number,
@@ -13,7 +15,10 @@ type CartWithoutQuantity = Omit<cart, 'quantity'>;
 type TodoState = {
   List: Array<cart>
 }
-
+const setData = async (data: Array<cart>) => {
+  const jsonValue = JSON.stringify(data)
+  await AsyncStorage.setItem(CART_ASNYC_STORAGE, jsonValue)
+}
 
 const initialState: TodoState = {
   List: []
@@ -39,13 +44,14 @@ export const cardSlice = createSlice({
         state.List = [...newList];
         return;
       }
-
+      setData(state.List)
       state.List = [{ quantity: 1, ...payload }, ...state.List];
     },
     deleteCart: (state, { payload }: PayloadAction<number>) => {
       const indexItemToCard = state.List.findIndex((item) => item.id === payload)
       const listNew = [...state.List];
       listNew.splice(indexItemToCard, 1);
+      setData(state.List)
       state.List = listNew;
     }
   }

@@ -2,7 +2,6 @@ import { View, TouchableOpacity } from "react-native";
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
-
 import ItemMenu from "./ItemMenu";
 
 export default function Home() {
@@ -15,9 +14,9 @@ export default function Home() {
       icon: <AntDesign name="shoppingcart" size={24} color="black" />
     },
     {
-      title: "TodoList",
-      pathStack: "TodoList",
-      icon: <Entypo name="list" size={24} color="black" />
+      title: "Đồng hồ đếm ngược",
+      pathStack: "countdownClock",
+      icon: <Entypo name="clock" size={24} color="black" />
     },
   ]
   return (
@@ -25,7 +24,7 @@ export default function Home() {
       {menu.map((item) => (
         <TouchableOpacity
           key={item.title}
-          className='p-4 w-1/4'
+          className='p-4 w-2/4'
           onPress={() => push(item.pathStack)}
         >
           <ItemMenu title={item.title} icon={item.icon} />

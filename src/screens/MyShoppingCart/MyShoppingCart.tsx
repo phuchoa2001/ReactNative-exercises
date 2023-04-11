@@ -1,14 +1,15 @@
-import { View, ScrollView, TouchableOpacity, Text, Alert } from 'react-native'
+import { View, TouchableOpacity, Text, Alert } from 'react-native'
 import React from 'react'
 import ItemShoppingCart from './ItemShoppingCart'
 import { useAppSelector } from '../../redux/store'
+import { ScrollView , useToast } from 'native-base'
 
 const MyshoppingCart: React.FC = () => {
   const { List } = useAppSelector(state => state.Cart);
+  const toast = useToast();
 
   const getPayAllList: number = List.reduce((a, b) => ((b.quantity * b.price) + a), 0);
-
-  console.log("getPayAllList", getPayAllList);
+  
   return (
     <View className='px-3'>
       <ScrollView >
