@@ -12,6 +12,8 @@ import MyshoppingCart from "./src/screens/MyShoppingCart/MyShoppingCart";
 import Login from "./src/screens/Auth/Login";
 import CountdownClock from "./src/screens/CountdownClock/CountdownClock";
 import Register from "./src/screens/Auth/Register";
+import Profile from "./src/screens/Profile/Profile";
+import Permission from "./src/components/Permission";
 
 import { CART_ASNYC_STORAGE } from "./src/constants/AsyncStorage";
 import store from './src/redux/store';
@@ -19,12 +21,11 @@ import store from './src/redux/store';
 const Stack = createStackNavigator();
 
 export default function App() {
-	const { getItem, setItem } = useAsyncStorage(CART_ASNYC_STORAGE);
+	const { getItem } = useAsyncStorage(CART_ASNYC_STORAGE);
 
 	const readItemFromStorage = async () => {
 		const jsonValue = await getItem();
 		const data = jsonValue != null ? JSON.parse(jsonValue) : null;
-		console.log("data", data);
 	};
 
 	useEffect(() => {
@@ -43,9 +44,24 @@ export default function App() {
 							<Stack.Navigator>
 								<Stack.Screen
 									name="Home"
-									component={Home}
+									component={() => (
+										<Permission>
+											<Home />
+										</Permission>
+									)
+									}
 									options={{
 										title: 'Trang chủ',
+									}} />
+								<Stack.Screen
+									name="Profile"
+									component={
+										() => <Permission>
+											<Profile />
+										</Permission>
+									}
+									options={{
+										title: 'Hồ sơ bản thân',
 									}} />
 								<Stack.Screen
 									name="Login"
@@ -61,21 +77,33 @@ export default function App() {
 									}} />
 								<Stack.Screen
 									name="ListShop"
-									component={ListShop}
+									component={() =>
+										<Permission>
+											<ListShop />
+										</Permission>
+									}
 									options={{
 										title: 'Danh sách sản phẩm',
 									}}
 								/>
 								<Stack.Screen
 									name="MyShoppingCart"
-									component={MyshoppingCart}
+									component={() => (
+										<Permission>
+											<MyshoppingCart />
+										</Permission>
+									)}
 									options={{
 										title: 'Giỏ hàng của tôi',
 									}}
 								/>
 								<Stack.Screen
 									name="countdownClock"
-									component={CountdownClock}
+									component={() => (
+										<Permission>
+											<CountdownClock />
+										</Permission>
+									)}
 									options={{
 										title: 'Đồng hồ đếm ngược',
 									}}

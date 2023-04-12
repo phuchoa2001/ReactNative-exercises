@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { View , Alert} from "react-native";
+import { useState, useEffect } from "react";
+import { View, Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { Button } from "native-base";
 import {
@@ -21,7 +21,7 @@ type LoginStateForm = {
 export default function Login() {
   const [show, setShow] = useState(false);
   const [form, setForm] = useState<LoginStateForm>({});
-  const { setItem } = useAsyncStorage(AUTH_FIREBASE);
+  const { setItem , getItem} = useAsyncStorage(AUTH_FIREBASE);
   const { push } = useNavigation();
 
   const handleGoToRegister = () => {
@@ -36,15 +36,27 @@ export default function Login() {
   }
 
   const handleSingIn = () => {
-    signInWithEmailAndPassword(auth , form.username , form.password).then((res) => {
+    signInWithEmailAndPassword(auth, form.username, form.password).then((res) => {
       const user = res.user;
       setItem(JSON.stringify(user))
       push("ListShop")
     }).catch(error => {
       console.log(error);
-      Alert.alert("Thông báo lỗi" , error.message);
+      Alert.alert("Thông báo lỗi", error.message);
     })
   }
+
+  const readUserFromStorage = async () => {
+    const jsonValue = await getItem();
+    const data = jsonValue != null ? JSON.parse(jsonValue) : null;
+    if(data) {
+      push("Home")
+		}
+  };
+
+  useEffect(() => {
+    readUserFromStorage();
+  }, [])
 
   return (
     <View className="flex-1 mt-4 px-3">
@@ -66,7 +78,7 @@ export default function Login() {
               <FormControl.Label>Email</FormControl.Label>
               <Input
                 placeholder="Nhập Email"
-                onChangeText={(text) => handleChange("username" , text)}
+                onChangeText={(text) => handleChange("username", text)}
                 autoCapitalize="none"
               />
             </FormControl>
