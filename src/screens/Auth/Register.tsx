@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Alert, View } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 import { Button } from "native-base";
@@ -30,7 +30,7 @@ export default function Register() {
     password: false,
     confirmPassword: false
   });
-  const { setItem } = useAsyncStorage(AUTH_FIREBASE);
+  const { setItem , getItem } = useAsyncStorage(AUTH_FIREBASE);
   const [form, setForm] = useState<RegisterStateForm>({});
   const [formTouched, setFormTouched] = useState<RegisterStateFormTouched>({
     username: false,
@@ -69,6 +69,19 @@ export default function Register() {
       Alert.alert("Thông báo lỗi" , error.message);
     })
   }
+
+  const readUserFromStorage = async () => {
+    const jsonValue = await getItem();
+    const data = jsonValue != null ? JSON.parse(jsonValue) : null;
+    if(data) {
+      push("Home")
+		}
+  };
+
+  useEffect(() => {
+    readUserFromStorage();
+  }, [])
+
   return (
     <View className="flex-1 mt-4 px-3">
       <Center w="100%">

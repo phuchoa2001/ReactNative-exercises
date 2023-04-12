@@ -18,6 +18,11 @@ export default function Home() {
       pathStack: "countdownClock",
       icon: <Entypo name="clock" size={24} color="black" />
     },
+    {
+      title: "Hồ sơ bản thân",
+      pathStack: "Profile",
+      icon: <AntDesign name="user" size={24} color="black" />
+    },
   ]
   return (
     <View className="flex-1 mt-4 flex-row flex-wrap">
