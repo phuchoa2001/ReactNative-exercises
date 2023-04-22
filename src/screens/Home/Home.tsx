@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import { AntDesign, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo , FontAwesome5 } from '@expo/vector-icons';
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
 import ItemMenu from "./ItemMenu";
@@ -22,6 +22,16 @@ export default function Home() {
       title: "Hồ sơ bản thân",
       pathStack: "Profile",
       icon: <AntDesign name="user" size={24} color="black" />
+    },
+    {
+      title: "Bản đồ",
+      pathStack: "Map",
+      icon: <FontAwesome5 name="map" size={24} color="black" />
+    },
+    {
+      title: "Bài viết",
+      pathStack: "Blog",
+      icon: <FontAwesome5 name="blogger-b" size={24} color="black" />
     },
   ]
   return (

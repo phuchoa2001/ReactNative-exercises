@@ -5,7 +5,7 @@ import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import { AUTH_FIREBASE } from '../constants/AsyncStorage';
 
 type PermissionProps = {
-  children : JSX
+  children : JSX.Element
 }
 const Permission = ({ children } : PermissionProps) => {
   const { getItem  } = useAsyncStorage(AUTH_FIREBASE);
