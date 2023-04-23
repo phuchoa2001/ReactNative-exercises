@@ -17,6 +17,7 @@ import Permission from "./src/components/Permission";
 import Map from "./src/screens/Map/Map";
 import Blog from "./src/screens/Blog/Blog";
 import ReadBlog from "./src/screens/Blog/ReadBlog";
+import Game from "./src/screens/Game/Game";
 
 import { CART_ASNYC_STORAGE } from "./src/constants/AsyncStorage";
 import store from './src/redux/store';
@@ -142,6 +143,17 @@ export default function App() {
                   )}
                   options={{
                     title: 'Bài viết chi tiết',
+                  }}
+                />
+                <Stack.Screen
+                  name="Game"
+                  component={() => (
+                    <Permission>
+                      <Game />
+                    </Permission>
+                  )}
+                  options={{
+                    title: 'Trò chơi',
                   }}
                 />
               </Stack.Navigator>

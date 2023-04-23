@@ -1,5 +1,5 @@
 import { View, TouchableOpacity } from "react-native";
-import { AntDesign, Entypo , FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign, Entypo , FontAwesome5 , FontAwesome } from '@expo/vector-icons';
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
 import ItemMenu from "./ItemMenu";
@@ -32,6 +32,11 @@ export default function Home() {
       title: "Bài viết",
       pathStack: "Blog",
       icon: <FontAwesome5 name="blogger-b" size={24} color="black" />
+    },
+    {
+      title: "Trò chơi",
+      pathStack: "Game",
+      icon: <FontAwesome name="gamepad" size={24} color="black" />
     },
   ]
   return (
